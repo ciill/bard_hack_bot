@@ -1,0 +1,4 @@
+twitter_node_service/node_modules
+config.json
+twitter_node_service/package-lock.json
+__pycache__/*

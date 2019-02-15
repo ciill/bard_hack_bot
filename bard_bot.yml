@@ -1,0 +1,8 @@
+name: bard_bot
+channels:
+- anaconda
+- conda-forge
+dependencies:
+- python=3.6
+- pymongo
+- requests

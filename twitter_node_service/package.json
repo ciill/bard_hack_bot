@@ -1,0 +1,17 @@
+{
+  "name": "bard_hack_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "lda": "^0.2.0",
+    "lodash": "^4.17.11",
+    "twit": "^2.2.11"
+  }
+}
