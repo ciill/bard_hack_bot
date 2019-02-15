@@ -13,11 +13,11 @@ class TwitterBot:
         }
 
     def _form_query_string(self, data):
-        query_string = '?'
+        query_string = ''
         for key in data.keys():
+            query_string += '?'
             query_string += f'{key}={data[key]}'
-            time.sleep(random.randint(2,8))
-            return query_string
+        return query_string
 
     def follow(self, data):
         post = requests.post(
@@ -61,9 +61,9 @@ class TwitterBot:
         time.sleep(random.randint(2,8))
         return getter.json()
 
-    def fetch_following(self, data):
+    def fetch_followers(self, data):
         query_string = self._form_query_string(data)
-        getter = requests.get(f'{self.node_endpoint}/fetch_following{query_string}')
+        getter = requests.get(f'{self.node_endpoint}/fetch_followers{query_string}')
         time.sleep(random.randint(2,8))
         return getter.json()
 
@@ -103,7 +103,7 @@ class Mongo:
         })
 
     def pull_stems(self):
-        return list(self.db.find_many({
+        return list(self.db['master_collection'].find({
             'stem': True
         }))
 

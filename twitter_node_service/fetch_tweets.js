@@ -1,7 +1,7 @@
 var CONFIG = require('./config.json');
 
-module.exports = async function fetch_tweets(user_id, amount) {
-  console.log(`Fetching user and tweets for ${user_id}`);
+module.exports = async function fetch_tweets(user_id) {
+  console.log(`Fetching tweets for ${user_id}`);
   const Twit = require('twit')
   const T = new Twit({
     consumer_key: CONFIG.consumer_key,
@@ -12,7 +12,7 @@ module.exports = async function fetch_tweets(user_id, amount) {
   const options = {
     skip_status: true,
     user_id: user_id,
-    count: amount
+    count: 100
   }
 
   let result = await T.get('statuses/user_timeline', options)

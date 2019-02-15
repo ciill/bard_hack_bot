@@ -5,7 +5,7 @@ const app = express()
 app.use(express.json())
 const port = 3000
 const fetch_tweets = require('./fetch_tweets')
-const fetch_following = require('./fetch_following');
+const fetch_followers = require('./fetch_followers');
 const classify = require('./classify')
 const follow = require('./follow')
 const follow_sn = require('./follow_sn')
@@ -13,24 +13,32 @@ const unfollow = require('./unfollow')
 
 app.get('/fetch_tweets', async (req, res) => {
   try {
-    let package = await fetch_tweets(req.query.user_id, req.query.amount)
+    let package = await fetch_tweets(req.query.user_id)
     res.send(package)
   } catch (e) {
     console.log(e)
   }
 })
 
-app.get('/fetch_following', async (req, res) => {
+app.get('/fetch_followers', async (req, res) => {
   try {
-    let package = await fetch_following(req.query.user_id, req.query.amount)
+    let package = await fetch_followers(req.query.user_id)
     res.send(package)
   } catch (e) {
     console.log(e)
   }
 })
 
-app.post('/classify', (req, res) =>
-  res.send(classify(req.body)))
+app.post('/classify', (req, res) => {
+  try {
+    let package = await(classify(req.body))
+    res.send(package)
+  } catch(e) {
+    console.log(e)
+    res.send(e)
+  }
+  
+})
 
 app.post('/follow', async (req, res) => {
   try {
@@ -38,6 +46,7 @@ app.post('/follow', async (req, res) => {
     res.send(package)
   } catch (e) {
     console.log(e)
+    res.send(e)
   }
 })
 
@@ -47,6 +56,7 @@ app.post('/follow_sn', async (req, res) => {
     res.send(package)
   } catch (e) {
     console.log(e)
+    res.send(e)
   }
 })
 
@@ -56,6 +66,7 @@ app.post('/unfollow', async (req, res) => {
     res.send(package)
   } catch (e) {
     console.log(e)
+    res.send(e)
   }
 })
 

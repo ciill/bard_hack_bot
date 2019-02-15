@@ -5,22 +5,22 @@ TwitBot = TwitterBot()
 
 def get_matched_terms(tweets):
 	classification = TwitBot.classify(data=tweets)
+	print(classification)
 	if not classification['should_follow']:
+		print('Not a good follow')
 		return False
+	print('Following! Good follow.')
 	return True
 	
 def find_useful_follow(candidate_id):
-	following_req_data = {
-		'user_id': candidate_id,
-		'amount': 20
+	followers_req_data = {
+		'user_id': candidate_id
 	}
-	following = TwitBot.fetch_following(data=following_req_data)
+	following = TwitBot.fetch_followers(data=followers_req_data)['following']
 	for user_id in following:
-		tweets_req_data = {
-			'user_id': user_id,
-			'amount': 100
-		}
-		matched_terms = get_matched_terms(TwitBot.fetch_tweets(data=tweets_req_data))
+		tweets_req_data = { 'user_id': user_id }
+		tweets = TwitBot.fetch_tweets(data=tweets_req_data)['tweets']
+		matched_terms = get_matched_terms(tweets)
 		if matched_terms:
 			if not Mongo.find(query={'user_id': id}):
 				followed_user = TwitBot.follow(data={'user_id': user_id})
