@@ -4,13 +4,13 @@ Mongo = Mongo()
 TwitBot = TwitterBot()
 
 
-andrew_user_id = 216939636
-follow_andrew = TwitBot.follow(data={'user_id': andrew_user_id})
+andrew = 'AndrewYNg'
+follow_andrew = TwitBot.follow_by_screen_name(data={'screen_name': andrew})
 
 ## Insert Andrew NG into DB as root of the tree
 entry = {
-    'user_id': follow_andrew['user_id'],
-    'username': follow_andrew['username'],
+    'user_id': '216939636',
+    'username': 'AndrewYNg',
     'matched_terms': ['AI'],
     'follow_date': follow_andrew['follow_date'],
     'followback_date': None,

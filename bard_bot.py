@@ -30,7 +30,7 @@ def find_useful_follow(candidate_id):
 					'matched_terms': matched_terms,
 					'follow_date': followed_user['follow_date'],
 					'followback_date': None,
-					'following': []
+					'following': [],
 					'followed_by': candidate_id,
 					'stem': True,
 					'banned': False,

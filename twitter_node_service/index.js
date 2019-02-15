@@ -8,6 +8,7 @@ const fetch_tweets = require('./fetch_tweets')
 const fetch_following = require('./fetch_following');
 const classify = require('./classify')
 const follow = require('./follow')
+const follow_sn = require('./follow_sn')
 const unfollow = require('./unfollow')
 
 app.get('/fetch_tweets', async (req, res) => {
@@ -33,7 +34,16 @@ app.post('/classify', (req, res) =>
 
 app.post('/follow', async (req, res) => {
   try {
-    let package = await follow(req.query.user_id)
+    let package = await follow(req.body.user_id)
+    res.send(package)
+  } catch (e) {
+    console.log(e)
+  }
+})
+
+app.post('/follow_sn', async (req, res) => {
+  try {
+    let package = await follow_sn(req.body.screen_name)
     res.send(package)
   } catch (e) {
     console.log(e)

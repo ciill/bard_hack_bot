@@ -23,7 +23,16 @@ class TwitterBot:
         post = requests.post(
             f'{self.node_endpoint}/follow', 
             headers = self.headers,
-            data = data
+            json = data
+        )
+        time.sleep(random.randint(2,8))
+        return post.json()
+
+    def follow_by_screen_name(self, data):
+        post = requests.post(
+            f'{self.node_endpoint}/follow_sn', 
+            headers = self.headers,
+            json = data
         )
         time.sleep(random.randint(2,8))
         return post.json()
@@ -32,7 +41,7 @@ class TwitterBot:
         post = requests.post(
             f'{self.node_endpoint}/classify', 
             headers = self.headers,
-            data = data
+            json = data
         )
         time.sleep(random.randint(2,8))
         return post.json()
@@ -41,7 +50,7 @@ class TwitterBot:
         post = requests.post(
             f'{self.node_endpoint}/unfollow', 
             headers = self.headers,
-            data = data
+            json = data
         )
         time.sleep(random.randint(2,8))
         return post.json()
@@ -65,10 +74,10 @@ class Mongo:
 
     def update_network(self, data):
         db = self.db[self.master_collection]
-        new_user_id = data.user_id
-        followed_by = graph.find({
-            'user_id': data.followed_by
-        })
+        new_user_id = data['user_id']
+        followed_by = list(db.find({
+            'user_id': data['followed_by']
+        }))
         if followed_by:
             db.update({'user_id': followed_by}, {
                 '$push': {'following': new_user_id}
@@ -76,13 +85,12 @@ class Mongo:
             db.update({'user_id': followed_by},{
                 '$set': { 'stem': False}
             })
-        db.insert_one(id)
+        db.insert_one(data)
         return True
 
     def add_user(self, data):
-        self.db[self.master_collection].insert_one(data)
         self.update_network(data)
-        return data.user_id
+        return data['user_id']
 
     def find(self, query):
         return self.db[self.master_collection].find_one(query)
