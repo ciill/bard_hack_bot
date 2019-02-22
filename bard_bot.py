@@ -19,11 +19,22 @@ def find_useful_follow(candidate_id):
 	following = TwitBot.fetch_followers(data=followers_req_data)['following']
 	for user_id in following:
 		tweets_req_data = { 'user_id': user_id }
-		tweets = TwitBot.fetch_tweets(data=tweets_req_data)['tweets']
+		try:
+			tweets = TwitBot.fetch_tweets(data=tweets_req_data)['tweets']
+		except:
+			print('unable to fetch tweets')
+			continue
+		if len(tweets) < 30:
+			print(f'unsuffencient amount of tweets ({len(tweets)})')
+			continue
 		matched_terms = get_matched_terms(tweets)
 		if matched_terms:
 			if not Mongo.find(query={'user_id': id}):
-				followed_user = TwitBot.follow(data={'user_id': user_id})
+				try:
+					followed_user = TwitBot.follow(data={'user_id': user_id})
+				except:
+					print('unable to follow user')
+					continue
 				entry = {
 					'user_id': followed_user['user_id'],
 					'username': followed_user['username'],

@@ -14,7 +14,18 @@ const machine_learning_terms = [
   'finance',
   'law',
   'probability',
-  'automation'
+  'automation',
+  'big_data',
+  'robots',
+  'bots',
+  'artificial intelligence',
+  'ml',
+  'pandas',
+  'numpy',
+  'r',
+  'statistics',
+  'coursera',
+  'deeplearning'
 ]
 
 module.exports = function classify(tweets_arr) {

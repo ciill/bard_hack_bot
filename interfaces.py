@@ -68,6 +68,7 @@ class TwitterBot:
         return getter.json()
 
 class Mongo:
+    ##TODO: MAKE INDEX THE USER ID SO WE STOP GETTING DUPLICATES ADDED
     def __init__(self):
         self.db = connect()
         self.master_collection = 'twitter_user'
@@ -94,6 +95,11 @@ class Mongo:
 
     def find(self, query):
         return self.db[self.master_collection].find_one(query)
+    
+    def return_all(self):
+        cursor = self.db[self.master_collection].find({})
+        for document in cursor: 
+            print(document)
 
     def ban_user(self, id):
         self.db[self.master_collection].update({'user_id': id}, {

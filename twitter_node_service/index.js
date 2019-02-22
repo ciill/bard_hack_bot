@@ -16,7 +16,8 @@ app.get('/fetch_tweets', async (req, res) => {
     let package = await fetch_tweets(req.query.user_id)
     res.send(package)
   } catch (e) {
-    console.log(e)
+    console.log('unable to fetch tweets')
+    res.send(e)
   }
 })
 
@@ -25,16 +26,17 @@ app.get('/fetch_followers', async (req, res) => {
     let package = await fetch_followers(req.query.user_id)
     res.send(package)
   } catch (e) {
-    console.log(e)
+    console.log('unable to fetch followers')
+    res.send(e)
   }
 })
 
-app.post('/classify', (req, res) => {
+app.post('/classify', async (req, res) => {
   try {
-    let package = await(classify(req.body))
+    let package = await classify(req.body)
     res.send(package)
   } catch(e) {
-    console.log(e)
+    console.log('unable to classify tweets')
     res.send(e)
   }
   
@@ -45,7 +47,7 @@ app.post('/follow', async (req, res) => {
     let package = await follow(req.body.user_id)
     res.send(package)
   } catch (e) {
-    console.log(e)
+    console.log('unable to follow user')
     res.send(e)
   }
 })
@@ -55,7 +57,7 @@ app.post('/follow_sn', async (req, res) => {
     let package = await follow_sn(req.body.screen_name)
     res.send(package)
   } catch (e) {
-    console.log(e)
+    console.log('unable to follow user')
     res.send(e)
   }
 })
@@ -65,7 +67,7 @@ app.post('/unfollow', async (req, res) => {
     let package = await unfollow(req.query.user_id)
     res.send(package)
   } catch (e) {
-    console.log(e)
+    console.log('unable to unfollow user')
     res.send(e)
   }
 })
